@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
-// You can replace these URLs with actual dental-care banner images
+// Banner images - reference from public folder
 const images = [
-  "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1920&auto=format&fit=crop", // dentist tools
-  "https://images.unsplash.com/photo-1588774060809-913a0b3161f3?q=80&w=1920&auto=format&fit=crop", // dental clinic
-  "https://images.unsplash.com/photo-1581594549595-35f6edc7b76d?q=80&w=1920&auto=format&fit=crop" // patient & dentist
+  "/herobanner-1.jpg",  // Place images in public folder
+  "/hero-banner-2.jpg"
 ];
 
 export default function HeroBanner() {
@@ -16,59 +16,123 @@ export default function HeroBanner() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
+  const scrollToServices = (e) => {
+    e.preventDefault();
+    const section = document.getElementById("services");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <section className="relative h-[80vh] w-full overflow-hidden">
-      {/* Image Slider */}
+    <section className="relative h-screen w-full overflow-hidden bg-slate-900">
+      {/* Animated Background */}
       <div className="absolute inset-0">
-        {images.map((img, idx) => (
+        <AnimatePresence mode="wait">
           <motion.img
-            key={idx}
-            src={img}
-            alt="Dental Care Banner"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: current === idx ? 1 : 0 }}
-            transition={{ duration: 0.8 }}
+            key={current}
+            src={images[current]}
+            alt="Dental Care"
+            initial={{ scale: 1.1, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
             className="absolute inset-0 h-full w-full object-cover"
           />
-        ))}
+        </AnimatePresence>
       </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-slate-900/60 to-purple-900/70"></div>
 
-      {/* Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white px-4">
-        <motion.h1
-          initial={{ y: 40, opacity: 0 }}
+      {/* Main Content */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 md:px-8 max-w-7xl mx-auto">
+
+        {/* Badge */}
+        <motion.div
+          initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-6xl font-bold drop-shadow-lg"
+          transition={{ duration: 0.6 }}
+          className="mb-6 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20"
         >
-          Premium Dental Care for Your Perfect Smile
+          <span className="text-white text-sm font-medium">
+            Your Dental Health is Our Priority
+          </span>
+        </motion.div>
+
+        {/* Heading */}
+        <motion.h1
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-5xl md:text-7xl lg:text-8xl font-bold text-white text-center leading-tight mb-6"
+        >
+          Your Journey to a
+          <motion.span
+            initial={{ backgroundPosition: "0% 50%" }}
+            animate={{ backgroundPosition: "100% 50%" }}
+            transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
+            className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-400 bg-clip-text text-transparent bg-[length:200%_auto]"
+          >
+            Perfect Smile
+          </motion.span>
         </motion.h1>
 
+        {/* Subtitle */}
         <motion.p
-          initial={{ y: 40, opacity: 0 }}
+          initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="mt-4 max-w-2xl text-lg md:text-xl drop-shadow-lg"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-lg md:text-xl text-gray-200 text-center max-w-3xl mb-10 leading-relaxed"
         >
-          We provide world‑class treatments with expert dentists and advanced equipment.
+          Experience world-class dental care with cutting-edge technology and compassionate experts dedicated to your oral health.
         </motion.p>
 
-        <motion.a
-          initial={{ y: 40, opacity: 0 }}
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          href="#book-appointment"
-          className="mt-6 bg-white text-blue-700 font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-blue-100 transition"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex flex-col sm:flex-row gap-4 mb-16"
         >
-          Book Appointment
-        </motion.a>
+          <Link href="/contact">
+            <motion.div
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="bg-white text-blue-700 font-semibold px-8 py-4 rounded-full shadow-md hover:bg-blue-100 transition cursor-pointer"
+            >
+              Book Appointment
+            </motion.div>
+          </Link>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={scrollToServices}
+            className="px-8 py-4 bg-white/10 backdrop-blur-md text-white font-semibold rounded-full border-2 border-white/30 hover:bg-white/20 transition-all duration-300"
+          >
+            View Services
+          </motion.button>
+        </motion.div>
+      </div>
+
+      {/* Slider Indicators */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
+        {images.map((_, idx) => (
+          <motion.button
+            key={idx}
+            onClick={() => setCurrent(idx)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              current === idx ? "w-8 bg-white" : "w-1.5 bg-white/40"
+            }`}
+            whileHover={{ scale: 1.2 }}
+          />
+        ))}
       </div>
     </section>
   );

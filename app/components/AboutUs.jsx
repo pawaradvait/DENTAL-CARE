@@ -1,31 +1,6 @@
 "use client";
 
 import React from "react";
-import { CheckCircle } from "lucide-react";
-
-const services = [
-  "Checkup / Consultation",
-  "Dental X Rays",
-  "Teeth Cleaning",
-  "Teeth Whitening",
-  "Implants",
-  "Veneers and Laminate",
-  "Crowns & Bridges",
-  "Denture",
-  "Root Canal Treatment",
-  "Wisdom Tooth Removal",
-  "Tooth Extraction",
-  "Dental / Oral Surgery",
-  "Mouth Guards / Night Guards",
-  "Orthodontic Treatment",
-  "Aligners",
-  "Crown Lengthening Treatment",
-  "Gum Depigmentation",
-  "Kids Dentistry (Pediatric)",
-  "Laser Dentistry",
-  "Periodontal Problems",
-  "Full Mouth Reconstruction",
-];
 
 export default function AboutUs() {
   return (
@@ -58,7 +33,7 @@ export default function AboutUs() {
 
             <p className="text-gray-700">
               From routine checkups and teeth cleaning to advanced procedures like
-              implants, orthodontics, cosmetic dentistry, and smile makeovers —
+              implants, orthodontics, cosmetic dentistry, and smile makeovers — 
               we bring modern technology and experienced hands together to give you
               the best care possible.
             </p>
@@ -72,25 +47,6 @@ export default function AboutUs() {
             <p className="text-xl md:text-2xl font-semibold text-center italic text-[#221d67] py-4">
               "Your Smile, Our Priority."
             </p>
-
-            {/* Services Section */}
-            <div className="mt-14">
-              <h3 className="text-3xl font-bold mb-8 text-[#221d67] text-center">
-                Our Services
-              </h3>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {services.map((service, index) => (
-                  <div
-                    key={index}
-                    className="group flex items-center gap-3 p-4 border border-[#221d67]/10 rounded-xl bg-white shadow-sm hover:shadow-lg hover:border-[#221d67]/30 transition-all duration-300"
-                  >
-                    <CheckCircle className="text-[#221d67] group-hover:scale-110 transition-transform" />
-                    <span className="text-gray-800 font-medium">{service}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
 
           </div>
         </div>
